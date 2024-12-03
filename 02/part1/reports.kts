@@ -1,5 +1,4 @@
 import java.io.File
-import java.util.PriorityQueue
 
 val file = if(args.contains("-i")) args[1 + args.indexOf("-i")] else ""
 
