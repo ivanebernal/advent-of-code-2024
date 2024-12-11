@@ -48,7 +48,7 @@ fun hasLoop(obstacle: Pair<Int, Int>): Boolean {
         } else {
             pos = pos + steps[dir]!!
         }
-        // if(isTest) animateMap(pos, dir, obstacle)
+        if(isTest) animateMap(pos, dir, obstacle)
     }
     return false
 }
