@@ -1,0 +1,39 @@
+import java.io.File
+typealias Coord = Pair<Int, Int>
+
+val file = args[1 + args.indexOf("-i")]
+
+var result = 0L
+val nodes = mutableMapOf<Char, List<Coord>>()
+
+val map = File(file).readLines()
+
+for (i in 0 until map.size) {
+    for (j in 0 until map[0].length) {
+        val c = map[i][j]
+        if (c != '.') {
+            nodes[c] = nodes[c].orEmpty() + listOf(i to j)
+        }
+    }
+}
+
+val antiNodes = mutableSetOf<Coord>()
+
+nodes.forEach { (signal, antennas) ->
+    for (i in 0 until antennas.size) {
+        for (j in (i + 1) until antennas.size) {
+            val distance = antennas[i] - antennas[j]
+            val antiNode1 = antennas[i] + distance
+            val antiNode2 = antennas[j] - distance
+            if (antiNode1.inRange() )antiNodes.add(antiNode1)
+            if (antiNode2.inRange() )antiNodes.add(antiNode2)
+        }   
+    }
+}
+
+println("Result: ${antiNodes.size}")
+
+
+operator fun Coord.minus(other: Coord) = (this.first - other.first) to (this.second - other.second)
+operator fun Coord.plus(other: Coord) = (this.first + other.first) to (this.second + other.second)
+fun Coord.inRange() = first in (0 until map.size) && second in (0 until map[0].length)
